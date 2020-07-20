@@ -5,8 +5,11 @@ from flask import render_template
 from flask import request
 from flask import session
 
-import requests #To access our API
+# import requests #To access our API
 
+from jeopardy import Jeopardy
+
+player = Jeopardy("")
 # -- Initialization section --
 app = Flask(__name__)
 
@@ -24,7 +27,11 @@ def index():
 def jeopardy_random():
     # Use jservice "/api/random" to get 1 jeopardy clue
     if request.method == "GET":
-        return render_template("random_clue.html", data={})
-    else:
-        game_data = request.form
-        return render_template("random_clue.html", data=game_data)
+        return "Go back to home"
+    elif request.method == "POST":
+        data = request.form
+        if player.name == "":
+            player.name = data["name"]
+            return render_template("random_clue.html", data={})
+        else:    
+            return render_template("random_clue.html", data=data)

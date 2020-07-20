@@ -1,59 +1,62 @@
 import requests
-API_endpoint = "https://jservice.io/api/clues"
-API_query = "value=1000"
-API_url = API_endpoint + "?" + API_query
-r = requests.get(API_url)
-data = r.json()
-page = ""
 
-def display_clue(clue):
-    question = clue["question"]
-    value = clue['value']
-    category = clue['category']['title']
-    page += 'Question: ' + question
-    page += 'Value: ' + str(value)
-    page += 'Category: ' + category.title()
-    # print('answer: ' + clue['answer'] )
-    return page
+class Jeopardy:
+    API_endpoint = "https://jservice.io/api/clues"
+    API_query = "value=1000"
+    API_url = API_endpoint + "?" + API_query
+    r = requests.get(API_url)
+    clues = r.json()
 
-def jeopardy():
-        name = input('What is your name? ')
-        score = 0
-        print(f'Welcome to jeopardy {name}')
-        for number in range(len(data)):
-            clue = data[number]
-            print('\n------------------\n')
-            print(f'Question #{number + 1}:\n')
-            display_clue(clue)
-            answer = input("What is ").lower()
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+        self.number = 0
+        self.correct = None
+    
+    def display_clue(self, clue):
+        clue_html = ""
+        question = clue["question"]
+        value = clue['value']
+        category = clue['category']['title']
+        clue_html += '<p>Question: ' + question + "</p>"
+        clue_html += '<p>Value: ' + str(value) + "</p>"
+        clue_html += '<p>Category: ' + category.title() + "</p>"
+        # print('answer: ' + clue['answer'] )
+        return clue_html
+
+    def jeopardy(self, data):
+            page = ""
+            number = self.number
+            clue = clues[number]
+
+            page += f'<p>Question #{number + 1}:</p>'
+            page += display_clue(clue)
+            answer = data["answer"]
             if clue["answer"].lower() == answer:
-                score +=  clue['value']
-                print(f"Your current score is {score}.")
+                self.score +=  clue['value']
+                self.correct = True
             else:
-                print("Incorrect")
-            ask_quit()
+                # print("Incorrect")
+                self.correct = False
+            
+            return page
 
+            # ask_quit()
 
-def ask_quit():
-    print('\n------------------\n')
-    choice = input("Do you want to keep on going Y/N ").lower()
-    if choice == 'n':
-        exit()
-    else:
-        print('Ok keep on playing!')
+    # def ask_quit(self):
+    #     print('\n------------------\n')
+    #     choice = input("Do you want to keep on going Y/N ").lower()
+    #     if choice == 'n':
+    #         exit()
+    #     else:
+    #         print('Ok keep on playing!')
 
+    # def generate_categories(self):
+    #     categories = []
+    #     rand = requests.get('https://jservice.io/api/random').json()
+    #     for i in range(5):
+    #         categories.append(rand[i]['category']['title'])
+    #     print(categories)
 
-def generate_categories():
-    categories = []
-    rand = requests.get('https://jservice.io/api/random').json()
-    for i in range(5):
-        categories.append(rand[i]['category']['title'])
-    print(categories)
-
-
-# def misspell(answer):
-#     for char1 in answer:
-
-
-# generate_categories()
-jeopardy()
+    # def misspell(answer):
+    #     for char1 in answer:

@@ -2,12 +2,15 @@
 {% block title %}Jeopardy - Game{% endblock title%}
 
 {% block content %}
-<!--form method="POST" action="/send_breakfast">
-    <label for="nickname">What's your nickname?</label>
-    <input type='text' name='nickname'>
-    <label for="breakfast">What did you have for breakfast?</label>
-    <input type='text' name='breakfast'>
-    <input type='submit'>
-</form-->
+    <p>{{player.name}}'s current score is {{player.score}}.</p>
+    <hr/>
 
+    <!-- Display question -->
+
+    <hr/>
+    <form method="POST" action="/random">
+        <label for="answer">What is </label>
+        <input type='text' name='answer'>
+        <input type='submit' value="Submit Answer">
+    </form>
 {% endblock content%}

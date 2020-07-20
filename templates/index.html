@@ -2,5 +2,10 @@
 {% block title %}Jeopardy - Home{% endblock title%}
 
 {% block content %}
-
+    <p> Welcome to Jeopardy! </p>
+    <form method="POST" action="/random">
+        <label for="name">What's your name, player? </label>
+        <input type='text' name='name'>
+        <input type='submit' value='Start Game'>
+    </form>
 {% endblock content%}
