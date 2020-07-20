@@ -1,4 +1,5 @@
 import requests
+from flask import Markup
 
 class Jeopardy:
     API_endpoint = "https://jservice.io/api/clues"
@@ -19,9 +20,9 @@ class Jeopardy:
         question = clue["question"]
         value = clue['value']
         category = clue['category']['title']
-        clue_html += '<p>Question: ' + question + "</p>"
-        clue_html += '<p>Value: ' + str(value) + "</p>"
-        clue_html += '<p>Category: ' + category.title() + "</p>"
+        clue_html += '<h2>Category: ' + category.title() + "</h2>"
+        clue_html += '<h3>Question: ' + question + "</h3>"
+        clue_html += '<h2>Value: ' + str(value) + "</h2>"
         # print('answer: ' + clue['answer'] )
         return clue_html
 
@@ -29,8 +30,14 @@ class Jeopardy:
             page = ""
             number = self.number
             clue = self.clues[number]
-
-            page += f'<p>Question #{number + 1}:</p>'
+            
+            if(number > 0):
+                if(self.correct):
+                    page += f"<p>CORRECT! The answer was {self.answer.title()}</p> <hr/>"
+                else:
+                    page += f"<p>Sorry, but the correct answer was {self.answer.title()}.</p> <hr/>"
+            
+            page += f'<h1>Question #{number + 1}:</h1>'
             page += self.display_clue(clue)
             answer = self.answer
             if clue["answer"].lower() == answer:
@@ -41,7 +48,7 @@ class Jeopardy:
                 self.correct = False
             
             self.number += 1
-            return page
+            return Markup(page)
 
             # ask_quit()
 

@@ -21,6 +21,7 @@ app.secret_key = b'HO\xf8\xff+\n\x1e\\~/;}'
 @app.route('/index')
 def index():
     session["name"] = "Anoopa"
+    player.name = ""
     return render_template('index.html')
 
 @app.route("/random", methods=["GET", "POST"])
