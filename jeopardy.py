@@ -39,7 +39,7 @@ class Jeopardy:
             
             page += f'<h1>Question #{number + 1}:</h1>'
             page += self.display_clue(clue)
-            answer = self.answer
+            answer = self.answer.lower()
             if clue["answer"].lower() == answer:
                 self.score +=  clue['value']
                 self.correct = True
