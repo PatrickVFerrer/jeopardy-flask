@@ -35,3 +35,5 @@ def jeopardy_random():
             return render_template("random_clue.html", data={})
         else:    
             return render_template("random_clue.html", data=data)
+    else:
+        return "idk what happened"
