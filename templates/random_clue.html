@@ -2,10 +2,10 @@
 {% block title %}Jeopardy - Game{% endblock title%}
 
 {% block content %}
-    <p>{{player.name}}'s current score is {{player.score}}.</p>
+    <p>{{data[0].name}}'s current score is {{data[0].score}}.</p>
     <hr/>
 
-    <!-- Display question -->
+    {{data[0].jeopardy(data[1])}}
 
     <hr/>
     <form method="POST" action="/random">

@@ -29,11 +29,10 @@ def jeopardy_random():
     if request.method == "GET":
         return "Go back to home"
     elif request.method == "POST":
-        data = request.form
+        form = request.form
         if player.name == "":
-            player.name = data["name"]
-            return render_template("random_clue.html", data={})
-        else:    
-            return render_template("random_clue.html", data=data)
+            player.name = form["name"]
+        game_data = [player, answer]    
+        return render_template("random_clue.html", data=game_data)
     else:
         return "idk what happened"

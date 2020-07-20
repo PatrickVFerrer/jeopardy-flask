@@ -11,6 +11,7 @@ class Jeopardy:
         self.name = name
         self.score = 0
         self.number = 0
+        self.answer = ""
         self.correct = None
     
     def display_clue(self, clue):
@@ -27,11 +28,11 @@ class Jeopardy:
     def jeopardy(self, data):
             page = ""
             number = self.number
-            clue = clues[number]
+            clue = self.clues[number]
 
             page += f'<p>Question #{number + 1}:</p>'
-            page += display_clue(clue)
-            answer = data["answer"]
+            page += self.display_clue(clue)
+            answer = self.answer
             if clue["answer"].lower() == answer:
                 self.score +=  clue['value']
                 self.correct = True
