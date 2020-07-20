@@ -8,8 +8,8 @@ from flask import session
 # import requests #To access our API
 
 from jeopardy import Jeopardy
+player = None
 
-player = Jeopardy("")
 # -- Initialization section --
 app = Flask(__name__)
 
@@ -20,8 +20,9 @@ app.secret_key = b'HO\xf8\xff+\n\x1e\\~/;}'
 @app.route('/')
 @app.route('/index')
 def index():
-    session["name"] = "Anoopa"
-    player.name = ""
+    # session["name"] = "Anoopa"
+    global player
+    player = Jeopardy("")
     return render_template('index.html')
 
 @app.route("/random", methods=["GET", "POST"])
