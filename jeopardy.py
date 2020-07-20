@@ -28,29 +28,28 @@ class Jeopardy:
 
     def jeopardy(self):
             page = ""
-            number = self.number
-            clue = self.clues[number]
-            
-            if(number > 0):
-                if(self.correct):
-                    page += f"<p>CORRECT! The answer was {self.answer.title()}</p> <hr/>"
+
+            if(self.number > 0):
+                answer = self.answer.lower()
+                prev_clue = self.clues[self.number - 1]
+                if prev_clue["answer"].lower() == answer:
+                    self.score += prev_clue['value']
+                    self.correct = True
                 else:
-                    page += f"<p>Sorry, but the correct answer was {self.answer.title()}.</p> <hr/>"
+                    self.correct = False
+                
+                if(self.correct):
+                    page += f"""<p>CORRECT! The answer was {prev_clue["answer"]}</p> <hr/>"""
+                else:
+                    page += f"""<p>Sorry, but the correct answer was {prev_clue["answer"]}.</p> <hr/>"""
             
-            page += f'<h1>Question #{number + 1}:</h1>'
+            page += f"""<p>{self.name}'s current score is {self.score}.</p>"""
+            clue = self.clues[self.number]
+            page += f'<h1>Question #{self.number + 1}:</h1>'
             page += self.display_clue(clue)
-            answer = self.answer.lower()
-            if clue["answer"].lower() == answer:
-                self.score +=  clue['value']
-                self.correct = True
-            else:
-                # print("Incorrect")
-                self.correct = False
             
             self.number += 1
             return Markup(page)
-
-            # ask_quit()
 
     # def ask_quit(self):
     #     print('\n------------------\n')
