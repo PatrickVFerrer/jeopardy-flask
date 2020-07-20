@@ -25,7 +25,7 @@ class Jeopardy:
         # print('answer: ' + clue['answer'] )
         return clue_html
 
-    def jeopardy(self, data):
+    def jeopardy(self):
             page = ""
             number = self.number
             clue = self.clues[number]
@@ -40,6 +40,7 @@ class Jeopardy:
                 # print("Incorrect")
                 self.correct = False
             
+            self.number += 1
             return page
 
             # ask_quit()

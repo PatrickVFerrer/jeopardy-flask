@@ -32,7 +32,8 @@ def jeopardy_random():
         form = request.form
         if player.name == "":
             player.name = form["name"]
-        game_data = [player, answer]    
-        return render_template("random_clue.html", data=game_data)
-    else:
-        return "idk what happened"
+        else:
+            player.answer = form["answer"]
+        return render_template("random_clue.html", data=player)
+    # else:
+    #     return "idk what happened"
